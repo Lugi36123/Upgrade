@@ -24,7 +24,7 @@ class GiveOrderForm : CommandExecutor, TabExecutor{
 
         meta.setCustomModelData(1)
         meta.setEnchantmentGlintOverride(true)
-        meta.setDisplayName("§4§o마법 부여 주문서")
+        meta.setDisplayName("§5§o마법 부여 주문서")
         meta.lore = Arrays.asList("§5엄청난 마법부여 주문서이다!")
 
         stack.itemMeta = meta

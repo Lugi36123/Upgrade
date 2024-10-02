@@ -41,8 +41,8 @@ class UpgradeEvent : Listener{
 
         if(e.view.title == "강화!"){
             if (raw in 0..8){
-                if (e.inventory.getItem(4) != null) {
-                    if (raw == 4){
+                if (raw == 4){
+                    if (e.inventory.getItem(4) != null) {
                         e.isCancelled = true
                         var jumun : ItemStack = ItemStack(Material.PAPER)
 
@@ -75,7 +75,7 @@ class UpgradeEvent : Listener{
                                 for (i: Int in 0..ad){
                                     var randa : Enchantment = Enchantment.values()[Random.nextInt(Enchantment.values().size)]
                                     if (randa.maxLevel != 1){
-                                        num = Random.nextInt(4)+1
+                                        num = Random.nextInt(10)+1
                                     }else{
                                         num = 1
                                     }
@@ -89,15 +89,15 @@ class UpgradeEvent : Listener{
                                 return
                             }
                         }
-                        p.sendMessage(Component.text("주문권이 부족합니다.")
+                        p.sendMessage(Component.text("주문서가 부족합니다.")
                             .color(TextColor.color(255,0,0))
                             .decorate(TextDecoration.BOLD)
                             .decorate(TextDecoration.ITALIC))
                         p.stopSound(Sound.BLOCK_ANVIL_DESTROY)
                         p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_DESTROY,1F,3F)
-                    }else{
-                        e.isCancelled = true
                     }
+                }else{
+                    e.isCancelled = true
                 }
             }
         }

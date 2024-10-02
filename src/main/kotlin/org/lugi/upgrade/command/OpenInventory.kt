@@ -16,10 +16,11 @@ class OpenInventory : CommandExecutor{
         var inv : Inventory = Bukkit.createInventory(p, 9, "강화!")
 
         for (i: Int in 0..3){
-            var stack : ItemStack = ItemStack(Material.ENCHANTING_TABLE)
+            var stack : ItemStack = ItemStack(Material.PAPER)
             var meta : ItemMeta = stack.itemMeta
 
             meta.isHideTooltip = true
+            meta.setCustomModelData(2)
 
             stack.itemMeta = meta
 
@@ -28,10 +29,11 @@ class OpenInventory : CommandExecutor{
             inv.setItem(i, stack)
         }
         for (i: Int in 5..8){
-            var stack : ItemStack = ItemStack(Material.GLASS_PANE)
+            var stack : ItemStack = ItemStack(Material.PAPER)
             var meta : ItemMeta = stack.itemMeta
 
             meta.isHideTooltip = true
+            meta.setCustomModelData(2)
 
             stack.itemMeta = meta
 
