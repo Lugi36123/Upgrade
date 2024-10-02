@@ -9,8 +9,8 @@ import org.lugi.upgrade.event.UpgradeEvent
 class Upgrade : JavaPlugin() {
     override fun onEnable() {
         // Plugin startup logic
-        getCommand("강화")?.setExecutor(OpenInventory())
-        getCommand("마법부여주문서")?.setExecutor(GiveOrderForm())
+        server.getPluginCommand("강화")?.setExecutor(OpenInventory())
+        server.getPluginCommand("마법부여주문서")?.setExecutor(GiveOrderForm())
         Bukkit.getServer().pluginManager.registerEvents(UpgradeEvent(), this)
     }
 

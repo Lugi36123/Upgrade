@@ -4,6 +4,7 @@ import io.papermc.paper.registry.keys.EnchantmentKeys
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextColor
 import net.kyori.adventure.text.format.TextDecoration
+import org.bukkit.Bukkit
 import org.bukkit.Color
 import org.bukkit.Material
 import org.bukkit.Registry
@@ -14,6 +15,9 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
+import org.bukkit.event.inventory.InventoryOpenEvent
+import org.bukkit.event.inventory.InventoryType
+import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.ItemMeta
 import kotlin.random.Random
@@ -70,12 +74,12 @@ class UpgradeEvent : Listener{
                                 var meta : ItemMeta = i.getItem(raw)?.itemMeta as ItemMeta
                                 var num : Int
                                 meta.removeEnchantments()
-                                var ad = Random.nextInt(5)+1
+                                var ad = Random.nextInt(3)+1
 
                                 for (i: Int in 0..ad){
                                     var randa : Enchantment = Enchantment.values()[Random.nextInt(Enchantment.values().size)]
                                     if (randa.maxLevel != 1){
-                                        num = Random.nextInt(10)+1
+                                        num = Random.nextInt(4)+1
                                     }else{
                                         num = 1
                                     }
@@ -100,6 +104,43 @@ class UpgradeEvent : Listener{
                     e.isCancelled = true
                 }
             }
+        }
+    }
+    @EventHandler
+    fun asdasd(e: InventoryOpenEvent){
+        if (e.inventory.type.equals(InventoryType.ENCHANTING)){
+            e.isCancelled = true
+            var p = e.player as Player
+            var inv : Inventory = Bukkit.createInventory(p, 9, "강화!")
+
+            for (i: Int in 0..3){
+                var stack : ItemStack = ItemStack(Material.PAPER)
+                var meta : ItemMeta = stack.itemMeta
+
+                meta.isHideTooltip = true
+                meta.setCustomModelData(2)
+
+                stack.itemMeta = meta
+
+                stack.amount = 1
+
+                inv.setItem(i, stack)
+            }
+            for (i: Int in 5..8){
+                var stack : ItemStack = ItemStack(Material.PAPER)
+                var meta : ItemMeta = stack.itemMeta
+
+                meta.isHideTooltip = true
+                meta.setCustomModelData(2)
+
+                stack.itemMeta = meta
+
+                stack.amount = 1
+
+                inv.setItem(i, stack)
+            }
+
+            p.openInventory(inv)
         }
     }
 }

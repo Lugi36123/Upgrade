@@ -1,7 +1,8 @@
 name: upgrade
 version: '1.0-SNAPSHOT'
 main: org.lugi.upgrade.Upgrade
-api-version: '1.21'
+api-version: '1.20.6'
+depend: [ ProtocolLib ]
 commands:
   강화:
   마법부여주문서:
