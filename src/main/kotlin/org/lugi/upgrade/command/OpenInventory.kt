@@ -1,5 +1,6 @@
 package org.lugi.upgrade.command
 
+import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.command.Command
@@ -13,10 +14,10 @@ import org.bukkit.inventory.meta.ItemMeta
 class OpenInventory : CommandExecutor{
     override fun onCommand(p0: CommandSender, p1: Command, p2: String, p3: Array<out String>?): Boolean {
         var p = p0 as Player
-        var inv : Inventory = Bukkit.createInventory(p, 9, "강화!")
+        var inv : Inventory = Bukkit.createInventory(p, 9, Component.text("강화!"))
 
         for (i: Int in 0..3){
-            var stack : ItemStack = ItemStack(Material.PAPER)
+            var stack : ItemStack = ItemStack(Material.ARMADILLO_SCUTE)
             var meta : ItemMeta = stack.itemMeta
 
             meta.isHideTooltip = true
@@ -29,7 +30,7 @@ class OpenInventory : CommandExecutor{
             inv.setItem(i, stack)
         }
         for (i: Int in 5..8){
-            var stack : ItemStack = ItemStack(Material.PAPER)
+            var stack : ItemStack = ItemStack(Material.ARMADILLO_SCUTE)
             var meta : ItemMeta = stack.itemMeta
 
             meta.isHideTooltip = true

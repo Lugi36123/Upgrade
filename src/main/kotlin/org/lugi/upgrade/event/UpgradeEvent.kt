@@ -2,6 +2,7 @@ package org.lugi.upgrade.event
 
 import io.papermc.paper.registry.keys.EnchantmentKeys
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.event.HoverEvent
 import net.kyori.adventure.text.format.TextColor
 import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Bukkit
@@ -27,7 +28,7 @@ class UpgradeEvent : Listener{
     @EventHandler
     fun InventoryCloseEvent(e: InventoryCloseEvent){
         var p = e.player as Player
-        if (e.view.title == "강화!"){
+        if (e.view.title == "강화!" && e.inventory.size == 9){
             if (e.inventory.getItem(4) != null) {
                 var i = e.inventory.getItem(4) as ItemStack
                 p.inventory.addItem(i)
@@ -43,21 +44,41 @@ class UpgradeEvent : Listener{
         var i = e.inventory
         var raw = e.rawSlot
 
-        if(e.view.title == "강화!"){
+        if(e.view.title == "강화!" && e.inventory.size == 9){
             if (raw in 0..8){
                 if (raw == 4){
-                    if (e.inventory.getItem(4) != null) {
+                    if (e.inventory.getItem(4) != null
+                        && e.inventory.getItem(4)?.type != Material.AIR
+                        && ( e.inventory.getItem(4)?.type.toString().endsWith("_SWORD")
+                        || e.inventory.getItem(4)?.type.toString().endsWith("_AXE")
+                        || e.inventory.getItem(4)?.type.toString().endsWith("TRIDENT")
+                        || e.inventory.getItem(4)?.type.toString().endsWith("_PICKAXE")
+                        || e.inventory.getItem(4)?.type.toString().endsWith("_SHOVEL")
+                        || e.inventory.getItem(4)?.type.toString().endsWith("_HOE")
+                        || e.inventory.getItem(4)?.type.toString().endsWith("_CHESTPLATE")
+                        || e.inventory.getItem(4)?.type.toString().endsWith("_HELMET")
+                        || e.inventory.getItem(4)?.type.toString().endsWith("_LEGGINGS")
+                        || e.inventory.getItem(4)?.type.toString().endsWith("_TUNIC")
+                        || e.inventory.getItem(4)?.type.toString().endsWith("_CAP")
+                        || e.inventory.getItem(4)?.type.toString().endsWith("_PANTS")
+                        || e.inventory.getItem(4)?.type.toString().endsWith("_BOOTS")
+                        || e.inventory.getItem(4)?.type.toString().endsWith("MACE")
+                        || e.inventory.getItem(4)?.type.toString().endsWith("BOW")
+                        || e.inventory.getItem(4)?.type.toString().endsWith("CROSSBOW")
+                        || e.inventory.getItem(4)?.type.toString().endsWith("SHIELD")
+                                )
+
+                    ) {
                         e.isCancelled = true
-                        var jumun : ItemStack = ItemStack(Material.PAPER)
+                        var jumun : ItemStack = ItemStack(Material.TURTLE_SCUTE)
 
                         for (item in p.inventory.contents) {
                             // 아이템이 null이 아니고, 종이(Material.PAPER)일 때
                             if (item != null
                                 && item.itemMeta.hasCustomModelData() == true
-                                && item.itemMeta.hasEnchantmentGlintOverride() == true
-                                && item.itemMeta.customModelData == 1
-                                && item.type == Material.PAPER
-                                && item.itemMeta.enchantmentGlintOverride == true) {
+                                && item.itemMeta.customModelData == 1205071
+                                && item.type == Material.TURTLE_SCUTE
+                            ){
                                 val amount = item.amount
 
                                 if (amount > 1) {
@@ -99,6 +120,17 @@ class UpgradeEvent : Listener{
                             .decorate(TextDecoration.ITALIC))
                         p.stopSound(Sound.BLOCK_ANVIL_DESTROY)
                         p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_DESTROY,1F,3F)
+                    }else if (e.inventory.getItem(4) != null){
+                        e.isCancelled = true
+                        p.sendMessage(Component.text("검, 갑옷, 도구에만 인첸트를 할수있습니다").color(TextColor.color(255,0,0)).hoverEvent(
+                            HoverEvent.showText(Component.text("검, 갑옷, 도구"))))
+                        p.stopSound(Sound.BLOCK_ANVIL_DESTROY)
+                        p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_DESTROY,1F,3F)
+                        var a = e.inventory.getItem(4) as ItemStack
+                        p.inventory.addItem(a)
+                        i.setItem(4, ItemStack(Material.AIR))
+                    }else{
+                        return
                     }
                 }else{
                     e.isCancelled = true
@@ -114,7 +146,7 @@ class UpgradeEvent : Listener{
             var inv : Inventory = Bukkit.createInventory(p, 9, "강화!")
 
             for (i: Int in 0..3){
-                var stack : ItemStack = ItemStack(Material.PAPER)
+                var stack : ItemStack = ItemStack(Material.ARMADILLO_SCUTE)
                 var meta : ItemMeta = stack.itemMeta
 
                 meta.isHideTooltip = true
@@ -127,7 +159,7 @@ class UpgradeEvent : Listener{
                 inv.setItem(i, stack)
             }
             for (i: Int in 5..8){
-                var stack : ItemStack = ItemStack(Material.PAPER)
+                var stack : ItemStack = ItemStack(Material.ARMADILLO_SCUTE)
                 var meta : ItemMeta = stack.itemMeta
 
                 meta.isHideTooltip = true

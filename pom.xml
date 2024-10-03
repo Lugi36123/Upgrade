@@ -48,6 +48,11 @@
                         <goals>
                             <goal>shade</goal>
                         </goals>
+                        <configuration>
+                            <outputFile>
+                                C:\Users\j2s36\Desktop\PluginPractice\plugins\upgrade-1.0-SNAPSHOT.jar
+                            </outputFile>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
