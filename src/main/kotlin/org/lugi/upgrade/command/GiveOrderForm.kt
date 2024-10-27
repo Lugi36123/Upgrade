@@ -17,12 +17,19 @@ import org.bukkit.inventory.meta.ItemMeta
 import java.util.Arrays
 
 class GiveOrderForm : CommandExecutor{
+
     override fun onCommand(
         sender: CommandSender,
         command: Command,
         label: String,
         args: Array<out String>?
     ): Boolean {
+        if (sender.isOp != true){
+            sender.sendMessage("오피만 사용할수있습니다.")
+
+            return true
+        }
+
         var p = sender as Player
 
         var stack : ItemStack = ItemStack(Material.TURTLE_SCUTE)

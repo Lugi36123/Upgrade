@@ -21,14 +21,24 @@ import org.bukkit.event.inventory.InventoryType
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.ItemMeta
+import java.util.Arrays
 import kotlin.random.Random
 import kotlin.random.nextInt
 
 class UpgradeEvent : Listener{
+    private val notEnable = arrayOf(Enchantment.SHARPNESS
+        ,Enchantment.EFFICIENCY
+        , Enchantment.FORTUNE
+        , Enchantment.UNBREAKING
+        , Enchantment.PROTECTION
+        , Enchantment.THORNS
+        , Enchantment.FIRE_ASPECT
+    )
+
     @EventHandler
     fun InventoryCloseEvent(e: InventoryCloseEvent){
         var p = e.player as Player
-        if (e.view.title == "강화!" && e.inventory.size == 9){
+        if (e.view.title == "인첸트" && e.inventory.size == 9){
             if (e.inventory.getItem(4) != null) {
                 var i = e.inventory.getItem(4) as ItemStack
                 p.inventory.addItem(i)
@@ -44,7 +54,7 @@ class UpgradeEvent : Listener{
         var i = e.inventory
         var raw = e.rawSlot
 
-        if(e.view.title == "강화!" && e.inventory.size == 9){
+        if(e.view.title == "인첸트" && e.inventory.size == 9){
             if (raw in 0..8){
                 if (raw == 4){
                     if (e.inventory.getItem(4) != null
@@ -97,14 +107,18 @@ class UpgradeEvent : Listener{
                                 meta.removeEnchantments()
                                 var ad = Random.nextInt(3)+1
 
-                                for (i: Int in 0..ad){
+                                for (isa: Int in 0..ad){
                                     var randa : Enchantment = Enchantment.values()[Random.nextInt(Enchantment.values().size)]
-                                    if (randa.maxLevel != 1){
-                                        num = Random.nextInt(4)+1
+                                    if (notEnable.contains(randa) != true){
+                                        if (randa.maxLevel > 1){
+                                            num = Random.nextInt(4) + 1
+                                        }else{
+                                            num = 1
+                                        }
+                                        meta.addEnchant(randa , (num), true)
                                     }else{
-                                        num = 1
+                                        isa - 1
                                     }
-                                    meta.addEnchant(randa , (num), true)
                                 }
 
                                 stack.setItemMeta(meta)
@@ -143,7 +157,7 @@ class UpgradeEvent : Listener{
         if (e.inventory.type.equals(InventoryType.ENCHANTING)){
             e.isCancelled = true
             var p = e.player as Player
-            var inv : Inventory = Bukkit.createInventory(p, 9, "강화!")
+            var inv : Inventory = Bukkit.createInventory(p, 9, "인첸트")
 
             for (i: Int in 0..3){
                 var stack : ItemStack = ItemStack(Material.ARMADILLO_SCUTE)
